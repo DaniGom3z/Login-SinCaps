@@ -22,6 +22,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
       Uri.parse('https://dummyjson.com/products'),
     );
     final data = jsonDecode(response.body);
+    if (!mounted) return; 
     setState(() {
       products =
           (data['products'] as List).map((e) => Product.fromJson(e)).toList();
