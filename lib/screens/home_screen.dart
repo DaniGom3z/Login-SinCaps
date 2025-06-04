@@ -1,3 +1,4 @@
+import 'package:login/screens/cart.screen.dart';
 import 'package:login/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:login/screens/product_list_screen.dart';
@@ -9,7 +10,6 @@ import 'package:login/screens/product_list_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final dynamic userData;
-  
 
   HomeScreen({this.userData});
 
@@ -19,8 +19,19 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Bienvenido $name'),
+
         actions: [
+         
           IconButton(
+            icon: Icon(Icons.shopping_cart),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => CartScreen()),
+              );
+            },
+          ),
+           IconButton(
             icon: Icon(Icons.login),
             onPressed: () {
               Navigator.pushReplacement(
@@ -31,7 +42,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body:ProductListScreen(),
+      body: ProductListScreen(),
     );
   }
 }

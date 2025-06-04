@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:no_screenshot/no_screenshot.dart'; // 👈 Importa la librería
 import '../models/product.dart';
+import '../cart/cart.dart'; // 👈 Asegúrate de importar donde está tu clase Cart
 
 class ProductDetailScreen extends StatefulWidget {
   final Product product;
@@ -43,7 +44,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20),
-
             // ListView horizontal para las imágenes
             SizedBox(
               height: 150,
@@ -61,6 +61,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   );
                 },
               ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Cart.add(product); // 👈 Asegúrate de tener un método estático `add` en tu clase Cart
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('${product.title} agregado al carrito')),
+                );
+              },
+              child: Text('Agregar al carrito'),
             ),
           ],
         ),
