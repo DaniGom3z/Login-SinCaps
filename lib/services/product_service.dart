@@ -4,10 +4,13 @@ import '../models/product.dart';
 
 class ProductService {
   final _base = 'https://fakestoreapi.com';
+  final http.Client client;
+
+  ProductService({http.Client? client}) : client = client ?? http.Client();
 
   Future<List<Product>> fetchProducts() async {
     final url = Uri.parse('$_base/products');
-    final res = await http.get(url);
+    final res = await client.get(url);
 
     if (res.statusCode == 200) {
       final List data = jsonDecode(res.body);
