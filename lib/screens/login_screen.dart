@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -32,11 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
       final data = jsonDecode(response.body);
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (_) => HomeScreen(
-            userData: data['user'],
-          ),
-        ),
+        MaterialPageRoute(builder: (_) => HomeScreen(userData: data['user'])),
       );
     } else {
       setState(() => error = 'Credenciales inválidas');
@@ -67,12 +64,13 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (_) => HomeScreen(
-              userData: {
-                'name': user.displayName ?? 'Sin nombre',
-                'email': user.email,
-              },
-            ),
+            builder:
+                (_) => HomeScreen(
+                  userData: {
+                    'name': user.displayName ?? 'Sin nombre',
+                    'email': user.email,
+                  },
+                ),
           ),
         );
       }
@@ -91,8 +89,9 @@ class _LoginScreenState extends State<LoginScreen> {
       githubAuthProvider.addScope('read:user');
       githubAuthProvider.setCustomParameters({'allow_signup': 'false'});
 
-      final userCredential =
-          await FirebaseAuth.instance.signInWithProvider(githubAuthProvider);
+      final userCredential = await FirebaseAuth.instance.signInWithProvider(
+        githubAuthProvider,
+      );
 
       final user = userCredential.user;
 
@@ -102,12 +101,13 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (_) => HomeScreen(
-              userData: {
-                'name': user.displayName ?? 'Sin nombre',
-                'email': user.email,
-              },
-            ),
+            builder:
+                (_) => HomeScreen(
+                  userData: {
+                    'name': user.displayName ?? 'Sin nombre',
+                    'email': user.email,
+                  },
+                ),
           ),
         );
       }
@@ -126,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color.fromARGB(255, 255, 255, 255), Color.fromARGB(255, 82, 97, 185)],
+            colors: [Color.fromARGB(255, 255, 255, 255), Color(0xFF3A7B93)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -149,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: Colors.indigo,
+                        color: Color(0xFF007DAB),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -178,8 +178,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       label: const Text('Ingresar'),
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(45),
-                        backgroundColor: Colors.indigo,
-                        foregroundColor: Colors.white
+                        backgroundColor: Color(0xFF007DAB),
+                        foregroundColor: Colors.white,
                       ),
                     ),
                     if (error.isNotEmpty) ...[
@@ -204,7 +204,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           icon: const Icon(FontAwesomeIcons.google),
                           label: const Text('Google'),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(255, 249, 165, 165),
+                            backgroundColor: const Color.fromARGB(255, 0, 160, 104),
+                            foregroundColor: const Color.fromARGB(
+                              255,
+                              255,
+                              255,
+                              255,
+                            ),
                           ),
                         ),
                         const SizedBox(width: 10),
@@ -213,8 +219,18 @@ class _LoginScreenState extends State<LoginScreen> {
                           icon: const Icon(FontAwesomeIcons.github),
                           label: const Text('GitHub'),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(221, 62, 59, 59),
-                            foregroundColor: const Color.fromARGB(255, 145, 92, 235)
+                            backgroundColor: const Color.fromARGB(
+                              221,
+                              62,
+                              59,
+                              59,
+                            ),
+                            foregroundColor: const Color.fromARGB(
+                              255,
+                              255,
+                              255,
+                              255,
+                            ),
                           ),
                         ),
                       ],
@@ -229,3 +245,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+

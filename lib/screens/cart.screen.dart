@@ -30,11 +30,15 @@ class _CartScreenState extends State<CartScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Carrito de Compras'),
+        title: Text(
+          'Carrito de Compras',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Color(0xFF0EAEE8),
         actions: [
           if (items.isNotEmpty)
             IconButton(
-              icon: Icon(Icons.delete),
+              icon: Icon(Icons.delete, color: Colors.red),
               tooltip: 'Vaciar carrito',
               onPressed: () {
                 Cart.clear();
@@ -42,39 +46,53 @@ class _CartScreenState extends State<CartScreen> {
                   context,
                 ).showSnackBar(SnackBar(content: Text('Carrito vaciado')));
                 // Refrescar pantalla
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (_) => CartScreen()),
-                );
+                setState(() {});
               },
             ),
         ],
       ),
-      body: items.isEmpty
-          ? Center(child: Text('El carrito está vacío'))
-          : ListView.builder(
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                final product = items[index];
-                return ListTile(
-                  leading: (product.images.isNotEmpty)
-                      ? Image.network(product.images[0], height: 40)
-                      : Icon(Icons.shopping_cart),
-                  title: Text(product.title),
-                  subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
-                );
-              },
-            ),
-      bottomNavigationBar: items.isNotEmpty
-          ? Container(
-              padding: const EdgeInsets.all(16.0),
-              color: Colors.grey[200],
-              child: Text(
-                'Total: \$${Cart.total.toStringAsFixed(2)}',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      body:
+          items.isEmpty
+              ? const Center(child: Text('El carrito está vacío'))
+              : ListView.builder(
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final product = items.keys.elementAt(index);
+                  final quantity = items[product]!;
+
+                  return ListTile(
+                    leading:
+                        (product.images.isNotEmpty)
+                            ? Image.network(product.images[0], height: 40)
+                            : const Icon(Icons.shopping_cart),
+                    title: Text(product.title),
+                    subtitle: Text(
+                      'Precio unitario: \$${product.price.toStringAsFixed(2)}\n'
+                      'Cantidad: $quantity\n'
+                      'Subtotal: \$${(product.price * quantity).toStringAsFixed(2)}',
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.black),
+                      onPressed: () {
+                        setState(() {
+                          Cart.remove(product);
+                        });
+                      },
+                    ),
+                  );
+                },
               ),
-            )
-          : null,
+      bottomNavigationBar:
+          items.isNotEmpty
+              ? Container(
+                padding: const EdgeInsets.all(16.0),
+                color: Colors.grey[200],
+                child: Text(
+                  'Total: \$${Cart.total.toStringAsFixed(2)}',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              )
+              : null,
     );
   }
 }

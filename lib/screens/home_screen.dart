@@ -5,9 +5,6 @@ import 'package:login/screens/product_list_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-// import '../services/auth_service.dart';
-// import 'login_screen.dart';
-// import 'product_list_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final dynamic userData;
@@ -35,9 +32,9 @@ class HomeScreen extends StatelessWidget {
             icon: Icon(Icons.logout),
             onPressed: () async {
               final googleSignIn = GoogleSignIn();
-              await googleSignIn.signOut(); // Cierra sesión en Google
+              await googleSignIn.signOut(); 
               await FirebaseAuth.instance
-                  .signOut(); // Cierra sesión en Firebase
+                  .signOut(); 
 
               Navigator.pushAndRemoveUntil(
                 context,
@@ -47,6 +44,7 @@ class HomeScreen extends StatelessWidget {
             },
           ),
         ],
+        backgroundColor: Color(0xFF0EAEE8)
       ),
 
       body: ProductListScreen(),
