@@ -6,7 +6,7 @@ import 'package:mockito/mockito.dart';
 import 'package:login/models/product.dart';
 import 'package:login/services/product_service.dart';
 
-import 'mocks.mocks.dart'; // Importa el mock generado
+import 'mocks.mocks.dart';
 
 void main() {
   group('ProductService tests', () {
